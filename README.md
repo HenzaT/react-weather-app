@@ -1,69 +1,30 @@
-# React + TypeScript + Vite
+# React Weather App - Connected to Flask backend
+This is a self-directed project. This is a project intended to consolidate my ongoing learning of React.js and TypeScript.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Goals
+This project is being developed in tandem with my python weather app. I wanted to practise building a separate back and front end, and then connecting the two together (so far I have built full-stack applications using Ruby on Rails). 
 
-Currently, two official plugins are available:
+## Tech Stack
+- React.js
+- TypeScript
+- Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Process
+I first set up my React project using Vite: 
 
-## Expanding the ESLint configuration
+`npm create vite@latest`\
+Selected framework: `React`\
+Selected variant: `TypeScript`\
+`cd react-weather-app`\
+`npm install`\
+`npm run dev`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+After setting up, I quickly made a Header, Card and Footer components. As I knew I would need to make requests to my Flask backend, I guessed that useEffect would need to be used - some research confirmed this. Setting this up was simple as I'd had practice doing this with my JLPTrainer react app. 
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Reflections
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Future Additions
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
