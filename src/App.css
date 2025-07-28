@@ -1,6 +1,11 @@
+@import './Components/Card/Card.css';
+@import './Components/Footer/Footer.css';
+@import './Components/Header/Header.css';
+
 section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+

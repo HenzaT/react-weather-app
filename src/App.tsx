@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import Header from './Header.tsx'
-import Card from './Card.tsx'
-import Footer from './Footer.tsx'
+import Card from './Components/Card/Card.tsx'
+import Claude from './Components/Claude/Claude.tsx'
+import Header from './Components/Header/Header.tsx'
+import Footer from './Components/Footer/Footer.tsx'
 import './App.css'
 
 function App() {
@@ -46,10 +47,14 @@ function App() {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <Card
-          temperature={cities.temperature}
-          description={cities.description}
-        />
+        <div className="cards">
+          <Card
+            city={formData.city}
+            temperature={cities.temperature}
+            description={cities.description}
+          />
+          <Claude />
+        </div>
       </div>
       <Footer />
     </section>

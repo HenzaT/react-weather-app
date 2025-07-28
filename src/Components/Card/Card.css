@@ -1,0 +1,20 @@
+.weather-card {
+  background-color: var(--light);
+  color: var(--dark);
+  border-radius: 20px;
+}
+
+.weather-card > h2 {
+  text-align: center;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.weather-icon {
+  border: 1px solid black;
+  padding: 40px;
+}
