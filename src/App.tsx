@@ -5,31 +5,54 @@ import Footer from './Footer.tsx'
 import './App.css'
 
 function App() {
-  const [cities, setCities] = useState([])
+  const [formData, setFormData] = useState({ city: "" })
+  const [cities, setCities] = useState({})
 
-  useEffect(() => {
-    fetch('http://localhost:5000/weather?city=Paris')
-      .then(res => res.json())
-      .then(data => setCities(data))
-      .catch(error => console.error('Error fetching weather:', error))
-  }, [])
+  function handleChange(event: React.FormEvent) {
+    const { name, value } = event.target
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }))
+  }
 
-  const elements = cities.map(city =>
-    <Card>
-      <p>{city.temperature}</p>
-      <p>{city.description}</p>
-    </Card>
-  )
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault()
+    const specificCity = formData.city
+
+    fetch(`http://localhost:5000/weather`, {
+      'method': 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ city: specificCity })
+    })
+    .then(res => res.json())
+    .then(data => setCities(data))
+    .catch(error => console.error('Error fetching weather:', error))
+  }
 
   return (
-    <>
+    <section>
       <Header />
       <div className="main">
-        <h1>Weather App</h1>
-        <p>{elements}</p>
+        <h1>Search for a city to find the current weather there</h1>
+        <form onSubmit={handleSubmit}>
+          <label>
+            City:
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        <Card
+          temperature={cities.temperature}
+          description={cities.description}
+        />
       </div>
       <Footer />
-    </>
+    </section>
   )
 }
 
