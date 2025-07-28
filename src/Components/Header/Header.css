@@ -2,4 +2,12 @@ header {
   width: 100%;
   background-color: var(--third-color);
   color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#header-icon {
+  font-size: 1.8rem;
 }
