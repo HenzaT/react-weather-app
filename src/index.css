@@ -18,6 +18,7 @@ html {
   --light: #E1E289;
   --hover: #14591D;
   --text: #EAD7D1;
+  --outline:  rgb(198, 198, 198);
   --third-color: #ACD2ED;
   --third-color-hover: #68a7d3;
 }

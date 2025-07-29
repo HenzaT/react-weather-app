@@ -1,11 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloud } from '@fortawesome/free-regular-svg-icons'
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 
-function Header() {
+export interface HeaderProps {
+  iconOne: IconProp
+  iconTwo: IconProp
+}
+
+function Header(props: HeaderProps) {
   return (
     <header>
-      <h1>What's The Weather?</h1>
-      <FontAwesomeIcon icon={faCloud} id="header-icon" />
+      <div className="header-top">
+        <FontAwesomeIcon icon={props.iconOne} id="header-icon" />
+        <h1>What's The Weather?</h1>
+        <FontAwesomeIcon icon={props.iconTwo} id="header-icon" />
+      </div>
+      {/* <label className="switch">
+        <input type="checkbox" />
+        <span className="slider round"></span>
+      </label> */}
     </header>
   )
 }
