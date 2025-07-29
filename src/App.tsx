@@ -7,11 +7,13 @@ import { faWind, faCloudBolt, faCloudRain } from '@fortawesome/free-solid-svg-ic
 import './App.css'
 
 function App() {
-  const [formData, setFormData] = useState({ city: "" })
-  const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
-  const [aiResponse, setAiResponse] = useState({ suggestion: "" })
+  const [formData, setFormData] = useState<{ city?: string }>({ city: "" })
+  const [errors, setErrors] = useState({})
 
-  const specificCity: string = formData.city
+  const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
+  const [aiResponse, setAiResponse] = useState<{ suggestion?: string }>({ suggestion: "" })
+
+  const specificCity = formData.city
   const firstLetter: string = specificCity.charAt(0).toUpperCase()
   const remainingLetters: string = specificCity.slice(1)
   const capitalizedCity: string = firstLetter + remainingLetters
@@ -25,17 +27,37 @@ function App() {
   // submit form and POST request to Flask
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault()
+    const newErrors = validateForm(formData)
+    setErrors(newErrors)
 
-    fetch(`http://localhost:5000/weather`, {
-      'method': 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ city: specificCity })
-    })
-    .then(res => res.json())
-    .then(data => setCities(data))
-    .catch(error => console.error('Error fetching weather:', error))
+    if (Object.keys(newErrors).length === 0) {
+        fetch(`http://localhost:5000/weather`, {
+          'method': 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ city: specificCity })
+        })
+        .then(res => res.json())
+        .then(data => setCities(data))
+        .catch(error => console.error('Error fetching weather:', error))
+        console.log('Form submitted successfully!');
+    } else {
+        console.log('Form submission failed due to validation errors.');
+    }
+  }
+
+  // validate form input
+  function validateForm(data) {
+    const errors = {}
+
+    if (!data.city.trim()) {
+      errors.city = 'a city is required'
+    } else if (data.city.length < 2) {
+      errors.city = 'city must be more than 1 character long'
+    }
+
+    return errors
   }
 
   // button event listener and POST request to Flask
@@ -96,6 +118,11 @@ function App() {
               onChange={handleChange}
             />
           </label>
+          {errors.city && (
+              <span className="error-message">
+                  {errors.city}
+              </span>
+          )}
           <input type="submit" value="Submit" />
         </form>
         <div className="cards">
