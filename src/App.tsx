@@ -18,6 +18,7 @@ function App() {
   // scroll to claude suggestion box after it loads
   useEffect(() => {
     if (aiResponse?.suggestion) {
+      setShowSpinner(prevSpinner => !prevSpinner)
       setTimeout(() => {
         scrollToSection(aiSection)
       }, 100)
@@ -34,6 +35,7 @@ function App() {
   }, [formData.city])
 
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
+  const [showSpinner, setShowSpinner] = useState<boolean>(false)
 
   const specificCity = formData.city
   const firstLetter: string = specificCity ? specificCity.charAt(0).toUpperCase() : ""
@@ -89,6 +91,7 @@ function App() {
   function requestClaude(event: React.FormEvent) {
     event.preventDefault()
     setButtonDisabled(true)
+    setShowSpinner(prevSpinner => !prevSpinner)
 
     fetch(`http://localhost:5000/api/suggestion`, {
       'method': 'POST',
@@ -107,6 +110,7 @@ function App() {
     })
   }
 
+  // scroll to section function
   function scrollToSection(section: React.RefObject<HTMLDivElement>) {
     section.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -131,6 +135,16 @@ function App() {
     }
   }
 
+  function conditionalClaudeButton() {
+    if (aiResponse.suggestion) {
+      return "...Voila!"
+    } else if (buttonDisabled) {
+      return "Loading..."
+    } else {
+      return "Ask Claude"
+    }
+  }
+
   return (
     <section>
       <Header
@@ -141,15 +155,15 @@ function App() {
       <div className="main">
         <Form
           handleSubmit={handleSubmit}
-          handleChange={handleChange}
           formData={formData}
+          handleChange={handleChange}
           errors={errors}
         />
         <div className="cards">
-            <div className="top-cards">
+          <div className="top-cards">
             <Card
               city={specificCity ? capitalizedCity : "________"}
-              temperature={cities.description ? cities.temperature : "__"}
+              temperature={cities.temperature ?? "__"}
               description={cities.description ?? "_____"}
               icon={specificCity && conditionalWeatherIcon()}
             />
@@ -162,20 +176,25 @@ function App() {
                 className="claude-button"
                 disabled={buttonDisabled}
               >
-                {buttonDisabled ? "Loading..." : "Ask Claude"}
+                {conditionalClaudeButton()}
               </button>
               ) : (
               <p>Search for a city first!</p>
               )}
             </div>
-            </div>
+          </div>
           {aiResponse.suggestion &&
-          <div
-            ref={aiSection}
-            className="claude-response-card">
-              {parse(aiResponse.suggestion)}
-              <button type="button" onClick={() => scrollToSection(headerSection)}>^</button>
-          </div>}
+            <div
+              ref={aiSection}
+              className="claude-response-card">
+                {parse(aiResponse.suggestion)}
+                <button type="button" onClick={() => scrollToSection(headerSection)}>back to top</button>
+            </div>}
+            {showSpinner &&
+              <div className="loading-spinner">
+                <div className="inside-circle"></div>
+              </div>
+            }
         </div>
       </div>
       <Footer />

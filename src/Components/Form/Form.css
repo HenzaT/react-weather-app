@@ -31,7 +31,7 @@ input[type=text]:focus {
   border: 3px solid var(--third-color);
 }
 
-input[type=submit], button.claude-button {
+input[type=submit], button.claude-button, .claude-response-card > button {
   width: 150px;
   height: 40px;
   cursor: pointer;
@@ -43,10 +43,10 @@ input[type=submit], button.claude-button {
   transition: background 0.3s ease-in-out;
 }
 
-input[type=submit] {
-  margin-top: 15px;
+input[type=submit]:hover, button.claude-button:hover, .claude-response-card > button:hover {
+  background-color: var(--third-color-hover);
 }
 
-input[type=submit]:hover, button.claude-button:hover {
-  background-color: var(--third-color-hover);
+input[type=submit] {
+  margin-top: 15px;
 }
