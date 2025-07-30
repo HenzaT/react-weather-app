@@ -66,6 +66,10 @@ function App() {
 
     if (Object.keys(newErrors).length === 0) {
         console.log("Calling API at:", `${apiUrl}/api/weather`);
+        if (!apiUrl) {
+          console.error("VITE_API_URL is not defined");
+          return;
+        }
         fetch(`${apiUrl}/api/weather`, {
           'method': 'POST',
           headers: {
