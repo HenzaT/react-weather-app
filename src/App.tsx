@@ -9,6 +9,7 @@ import parse from 'html-react-parser';
 import './App.css'
 
 function App() {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [formData, setFormData] = useState<{ city: string }>({ city: "" })
   const [errors, setErrors] = useState<{ city?: string }>({})
 
@@ -64,7 +65,7 @@ function App() {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-        fetch(`http://localhost:5000/api/weather`, {
+        fetch(`${apiUrl}/api/weather`, {
           'method': 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -103,7 +104,7 @@ function App() {
     setButtonDisabled(true)
     setShowSpinner(prevSpinner => !prevSpinner)
 
-    fetch(`http://localhost:5000/api/suggestion`, {
+    fetch(`${apiUrl}/api/suggestion`, {
       'method': 'POST',
       headers: {
         'Content-Type': 'application/json'
