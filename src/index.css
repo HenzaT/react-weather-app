@@ -23,11 +23,17 @@ html {
   --third-color-hover: #68a7d3;
 }
 
-body, form, button {
+body, form, button, input {
   margin: 0;
   padding: 0;
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

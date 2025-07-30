@@ -4,6 +4,10 @@
   border-radius: 20px;
 }
 
+.weather-card, .claude-card {
+  width: 400px;
+}
+
 .weather-card > h2 {
   text-align: center;
 }
@@ -17,4 +21,16 @@
 .weather-icon {
   padding: 40px;
   font-size: 4rem;
+}
+
+.weather-info {
+  text-align: center;
+}
+
+.sub-title {
+  text-decoration: underline;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }

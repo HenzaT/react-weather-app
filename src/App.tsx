@@ -1,37 +1,62 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Card from './Components/Card/Card.tsx'
-import Header from './Components/Header/Header.tsx'
+import Form from './Components/Form/Form.tsx'
 import Footer from './Components/Footer/Footer.tsx'
+import Header from './Components/Header/Header.tsx'
 import { faCloud, faSun, faSnowflake } from '@fortawesome/free-regular-svg-icons'
 import { faWind, faCloudBolt, faCloudRain } from '@fortawesome/free-solid-svg-icons'
+import parse from 'html-react-parser';
 import './App.css'
 
 function App() {
   const [formData, setFormData] = useState<{ city?: string }>({ city: "" })
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<{ city?: string }>({})
 
   const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
   const [aiResponse, setAiResponse] = useState<{ suggestion?: string }>({ suggestion: "" })
 
+  // scroll to claude suggestion box after it loads
+  useEffect(() => {
+    if (aiResponse?.suggestion) {
+      setTimeout(() => {
+        scrollToSection(aiSection)
+      }, 100)
+    }
+  }, [aiResponse])
+
+  // clear weather card data and reset button so it is enabled again
+  useEffect(() => {
+    if (formData.city === "") {
+      setCities({})
+      setAiResponse({})
+      setButtonDisabled(false)
+    }
+  }, [formData.city])
+
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
+
   const specificCity = formData.city
-  const firstLetter: string = specificCity.charAt(0).toUpperCase()
-  const remainingLetters: string = specificCity.slice(1)
+  const firstLetter: string = specificCity ? specificCity.charAt(0).toUpperCase() : ""
+  const remainingLetters: string = specificCity ? specificCity.slice(1) : ""
   const capitalizedCity: string = firstLetter + remainingLetters
 
+  const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const headerSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+
   // form action
-  function handleChange(event: React.FormEvent): void {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = event.target
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }))
   }
 
   // submit form and POST request to Flask
-  function handleSubmit(event: React.FormEvent): void {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault()
     const newErrors = validateForm(formData)
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-        fetch(`http://localhost:5000/weather`, {
+        fetch(`http://localhost:5000/api/weather`, {
           'method': 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -48,7 +73,7 @@ function App() {
   }
 
   // validate form input
-  function validateForm(data) {
+  function validateForm(data: { city?: string }): { city?: string } {
     const errors = {}
 
     if (!data.city.trim()) {
@@ -63,8 +88,9 @@ function App() {
   // button event listener and POST request to Flask
   function requestClaude(event: React.FormEvent) {
     event.preventDefault()
+    setButtonDisabled(true)
 
-    fetch(`http://localhost:5000/suggestion`, {
+    fetch(`http://localhost:5000/api/suggestion`, {
       'method': 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -72,8 +98,17 @@ function App() {
       body: JSON.stringify({ weather: cities.description, city: specificCity })
     })
     .then(res => res.json())
-    .then(data => setAiResponse(data))
-    .catch(error => console.error('Error fetching weather:', error))
+    .then(data => {
+      setAiResponse(data)
+    })
+    .catch(error => {
+      console.error('Error fetching weather:', error)
+      setButtonDisabled(false);
+    })
+  }
+
+  function scrollToSection(section: React.RefObject<HTMLDivElement>) {
+    section.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   // conditional weather icons depending on the description
@@ -86,7 +121,7 @@ function App() {
         return faSun
       } else if (weatherDescription.includes('rain')) {
         return faCloudRain
-      } else if (weatherDescription.includes('wind')) {
+      } else if (weatherDescription.includes('wind') || weatherDescription.includes('dust')) {
         return faWind
       } else if (weatherDescription.includes('snow') || weatherDescription.includes('ic')) {
         return faSnowflake
@@ -96,49 +131,51 @@ function App() {
     }
   }
 
-  // element variables
-  const claudeButton = <button type="button" onClick={requestClaude} className="claude-button">Ask Claude</button>
-  const beforeClaudeElement = <p>Search for a city first!</p>
-
   return (
     <section>
       <Header
+        ref={headerSection}
         iconOne={faSun}
         iconTwo={faCloud}
       />
       <div className="main">
-        <h1>Search for a city to find the current weather there</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              name="city"
-              placeholder="type a city here..."
-              value={formData.city}
-              onChange={handleChange}
-            />
-          </label>
-          {errors.city && (
-              <span className="error-message">
-                  {errors.city}
-              </span>
-          )}
-          <input type="submit" value="Submit" />
-        </form>
+        <Form
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          formData={formData}
+          errors={errors}
+        />
         <div className="cards">
-          <div className="top-cards">
+            <div className="top-cards">
             <Card
-              city={capitalizedCity}
-              temperature={cities.temperature}
-              description={cities.description}
-              icon={conditionalWeatherIcon()}
+              city={specificCity ? capitalizedCity : "________"}
+              temperature={cities.description ? cities.temperature : "__"}
+              description={cities.description ?? "_____"}
+              icon={specificCity && conditionalWeatherIcon()}
             />
             <div className="claude-card">
               <h2>Things to do in this weather:</h2>
-              {cities.temperature && cities.description ? claudeButton : beforeClaudeElement}
+              {cities.temperature && cities.description ? (
+              <button
+                type="button"
+                onClick={requestClaude}
+                className="claude-button"
+                disabled={buttonDisabled}
+              >
+                {buttonDisabled ? "Loading..." : "Ask Claude"}
+              </button>
+              ) : (
+              <p>Search for a city first!</p>
+              )}
             </div>
-          </div>
-          <div className="claude-response-card">{aiResponse.suggestion}</div>
+            </div>
+          {aiResponse.suggestion &&
+          <div
+            ref={aiSection}
+            className="claude-response-card">
+              {parse(aiResponse.suggestion)}
+              <button type="button" onClick={() => scrollToSection(headerSection)}>^</button>
+          </div>}
         </div>
       </div>
       <Footer />
