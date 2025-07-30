@@ -65,6 +65,7 @@ function App() {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
+        console.log("Calling API at:", `${apiUrl}/api/weather`);
         fetch(`${apiUrl}/api/weather`, {
           'method': 'POST',
           headers: {
