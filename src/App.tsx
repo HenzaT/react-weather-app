@@ -9,7 +9,7 @@ import parse from 'html-react-parser';
 import './App.css'
 
 function App() {
-  const apiUrl = import.meta.env.REACT_APP_API_URL as string | undefined;
+  const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
   const [formData, setFormData] = useState<{ city: string }>({ city: "" })
   const [errors, setErrors] = useState<{ city?: string }>({})
 
