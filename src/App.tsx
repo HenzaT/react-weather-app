@@ -9,7 +9,7 @@ import parse from 'html-react-parser';
 import './App.css'
 
 function App() {
-  const [formData, setFormData] = useState<{ city?: string }>({ city: "" })
+  const [formData, setFormData] = useState<{ city: string }>({ city: "" })
   const [errors, setErrors] = useState<{ city?: string }>({})
 
   const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
@@ -51,6 +51,12 @@ function App() {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }))
   }
 
+  interface WeatherData {
+    temperature: number
+    description: string
+  }
+
+
   // submit form and POST request to Flask
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault()
@@ -66,7 +72,7 @@ function App() {
           body: JSON.stringify({ city: specificCity })
         })
         .then(res => res.json())
-        .then(data => setCities(data))
+        .then((data: WeatherData) => setCities(data))
         .catch(error => console.error('Error fetching weather:', error))
         console.log('Form submitted successfully!');
     } else {
@@ -75,8 +81,8 @@ function App() {
   }
 
   // validate form input
-  function validateForm(data: { city?: string }): { city?: string } {
-    const errors = {}
+  function validateForm(data: { city: string }): { city?: string } {
+    const errors: { city?: string } = {}
 
     if (!data.city.trim()) {
       errors.city = 'a city is required'
@@ -85,6 +91,10 @@ function App() {
     }
 
     return errors
+  }
+
+  interface ClaudeData {
+    suggestion: string
   }
 
   // button event listener and POST request to Flask
@@ -101,7 +111,7 @@ function App() {
       body: JSON.stringify({ weather: cities.description, city: specificCity })
     })
     .then(res => res.json())
-    .then(data => {
+    .then((data: ClaudeData) => {
       setAiResponse(data)
     })
     .catch(error => {
@@ -163,9 +173,9 @@ function App() {
           <div className="top-cards">
             <Card
               city={specificCity ? capitalizedCity : "________"}
-              temperature={cities.temperature ?? "__"}
+              temperature={cities.temperature ?? 0}
               description={cities.description ?? "_____"}
-              icon={specificCity && conditionalWeatherIcon()}
+              icon={conditionalWeatherIcon() ?? faCloud}
             />
             <div className="claude-card">
               <h2>Things to do in this weather:</h2>

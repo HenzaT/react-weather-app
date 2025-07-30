@@ -14,7 +14,7 @@ function Card(props: weatherProps) {
       <h2>Current Weather in: <br />{props.city}</h2>
       <div className="card-content">
         <div className="weather-info">
-          <p><span className="sub-title">Temperature:</span> <br />{props.temperature}°C</p>
+          <p><span className="sub-title">Temperature:</span> <br />{props.city ? props.temperature : "__"}°C</p>
           <p><span className="sub-title">Weather:</span> <br />{props.description}</p>
         </div>
         {props.description && <FontAwesomeIcon icon={props.icon} className="weather-icon" />}
