@@ -22,7 +22,7 @@ Selected variant: `TypeScript`\
 After setting up, I quickly made a Header, Card and Footer components. As I knew I would need to make requests to my Flask backend, I guessed that useEffect would need to be used - some research confirmed this. Setting this up was simple as I'd had practice doing this with my JLPTrainer react app. 
 
 ## Reflections
-
+This was my third react project. It helped me to understand better how data is transferred from a parent component to a child component, and how to use props. I also put into practice my learning about conditional rendering and forms in react.  
 
 ## Future Additions
 
