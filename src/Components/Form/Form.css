@@ -11,12 +11,13 @@ label, input[type=text] {
 }
 
 input::placeholder {
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 input[type=text] {
   padding: 10px 30px;
   margin: 8px 0;
+  font-size: 1.3rem;
   box-sizing: border-box;
   border-radius: 5px;
   border: 2px solid var(--outline);
@@ -31,7 +32,7 @@ input[type=text]:focus {
   border: 3px solid var(--third-color);
 }
 
-input[type=submit], button.claude-button, .claude-response-card > button {
+input[type=submit], button.claude-button, .claude-response-card > button, .clear-button {
   width: 150px;
   height: 40px;
   cursor: pointer;
@@ -43,10 +44,10 @@ input[type=submit], button.claude-button, .claude-response-card > button {
   transition: background 0.3s ease-in-out;
 }
 
-input[type=submit]:hover, button.claude-button:hover, .claude-response-card > button:hover {
+input[type=submit]:hover, button.claude-button:hover, .claude-response-card > button:hover, .clear-button:hover {
   background-color: var(--third-color-hover);
 }
 
-input[type=submit] {
+input[type=submit], .clear-button {
   margin-top: 15px;
 }

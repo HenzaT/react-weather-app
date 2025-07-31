@@ -1,8 +1,11 @@
+import React from "react";
+
 export interface FormProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
-  formData: { city: string },
+  formData: { city: string, description: string },
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  errors: { city?: string }
+  errors: { city?: string },
+  handleClear: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function Form(props: FormProps) {
@@ -22,7 +25,17 @@ function Form(props: FormProps) {
               {props.errors.city}
           </span>
       )}
-      <input type="submit" value="Submit" />
+      {props.formData.description && props.formData.city ? (
+        <button
+          className="clear-button"
+          type="button"
+          onClick={props.handleClear}
+        >
+          Clear
+        </button>
+      ) : (
+        <input type="submit" value="Submit" />
+      )}
     </form>
   )
 }

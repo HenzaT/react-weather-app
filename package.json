@@ -22,6 +22,7 @@
     "html-react-parser": "^5.2.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-transition-group": "^4.4.5",
     "serve": "^14.2.4"
   },
   "devDependencies": {

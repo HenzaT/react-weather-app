@@ -4,13 +4,15 @@ import Form from './Components/Form/Form.tsx'
 import Footer from './Components/Footer/Footer.tsx'
 import Header from './Components/Header/Header.tsx'
 import { faCloud, faSun, faSnowflake } from '@fortawesome/free-regular-svg-icons'
-import { faWind, faCloudBolt, faCloudRain } from '@fortawesome/free-solid-svg-icons'
+import { faWind, faCloudBolt, faCloudRain, faSmog } from '@fortawesome/free-solid-svg-icons'
 import parse from 'html-react-parser';
+// import { CSSTransition } from 'react-transition-group';
 import './App.css'
 
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
-  const [formData, setFormData] = useState<{ city: string }>({ city: "" })
+
+  const [formData, setFormData] = useState<{ city: string, description: string }>({ city: "", description: "" })
   const [errors, setErrors] = useState<{ city?: string }>({})
 
   const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
@@ -45,6 +47,7 @@ function App() {
 
   const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const headerSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  // const nodeRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   // form action
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -78,12 +81,24 @@ function App() {
           body: JSON.stringify({ city: specificCity })
         })
         .then(res => res.json())
-        .then((data: WeatherData) => setCities(data))
+        .then((data: WeatherData) => {
+          setCities(data)
+          setFormData(prev => ({ ...prev, description: data.description }))
+        })
         .catch(error => console.error('Error fetching weather:', error))
         console.log('Form submitted successfully!');
     } else {
         console.log('Form submission failed due to validation errors.');
     }
+  }
+
+  // clear input box
+  function handleClear() {
+    setFormData(formData => ({
+      ...formData,
+      city: ''
+      })
+    )
   }
 
   // validate form input
@@ -139,12 +154,14 @@ function App() {
         return faCloud
       } else if (weatherDescription.includes('sun') || weatherDescription.includes('clear')) {
         return faSun
-      } else if (weatherDescription.includes('rain')) {
+      } else if (weatherDescription.includes('rain') || weatherDescription.includes('drizz')) {
         return faCloudRain
       } else if (weatherDescription.includes('wind') || weatherDescription.includes('dust')) {
         return faWind
       } else if (weatherDescription.includes('snow') || weatherDescription.includes('ic')) {
         return faSnowflake
+      } else if (weatherDescription.includes('fog')) {
+        return faSmog
       } else {
         return faCloudBolt
       }
@@ -174,6 +191,7 @@ function App() {
           formData={formData}
           handleChange={handleChange}
           errors={errors}
+          handleClear={handleClear}
         />
         <div className="cards">
           <div className="top-cards">
