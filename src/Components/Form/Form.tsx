@@ -5,7 +5,8 @@ export interface FormProps {
   formData: { city: string, description: string },
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
   errors: { city?: string },
-  handleClear: (event: React.MouseEvent<HTMLButtonElement>) => void
+  handleClear: (event: React.MouseEvent<HTMLButtonElement>) => void,
+  hasSubmitted: boolean
 }
 
 function Form(props: FormProps) {
@@ -25,7 +26,7 @@ function Form(props: FormProps) {
               {props.errors.city}
           </span>
       )}
-      {props.formData.description && props.formData.city ? (
+      {props.hasSubmitted && props.formData.description && props.formData.city ? (
         <button
           className="clear-button"
           type="button"

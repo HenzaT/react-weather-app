@@ -39,6 +39,7 @@ function App() {
 
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const [showSpinner, setShowSpinner] = useState<boolean>(false)
+  const [hasSubmitted, setHasSubmitted] = useState<boolean>(false)
 
   const specificCity = formData.city
   const firstLetter: string = specificCity ? specificCity.charAt(0).toUpperCase() : ""
@@ -66,6 +67,7 @@ function App() {
     event.preventDefault()
     const newErrors = validateForm(formData)
     setErrors(newErrors)
+    setHasSubmitted(true)
 
     if (Object.keys(newErrors).length === 0) {
         console.log("Calling API at:", `${apiUrl}/api/weather`);
@@ -94,11 +96,8 @@ function App() {
 
   // clear input box
   function handleClear() {
-    setFormData(formData => ({
-      ...formData,
-      city: ''
-      })
-    )
+    setFormData({city: '', description: ''})
+    setHasSubmitted(false)
   }
 
   // validate form input
@@ -192,6 +191,7 @@ function App() {
           handleChange={handleChange}
           errors={errors}
           handleClear={handleClear}
+          hasSubmitted={hasSubmitted}
         />
         <div className="cards">
           <div className="top-cards">

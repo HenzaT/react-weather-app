@@ -75,3 +75,11 @@ button.claude-button:disabled {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 600px) {
+  .top-cards {flex-direction: column;}
+
+  button.claude-button {margin-bottom: 20px;}
+
+  .claude-response-card {width: 350px;}
+}
