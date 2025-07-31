@@ -18,25 +18,6 @@ function App() {
   const [cities, setCities] = useState<{ temperature?: number; description?: string }>({})
   const [aiResponse, setAiResponse] = useState<{ suggestion?: string }>({ suggestion: "" })
 
-  // scroll to claude suggestion box after it loads
-  useEffect(() => {
-    if (aiResponse?.suggestion) {
-      setShowSpinner(prevSpinner => !prevSpinner)
-      setTimeout(() => {
-        scrollToSection(aiSection)
-      }, 100)
-    }
-  }, [aiResponse])
-
-  // clear weather card data and reset button so it is enabled again
-  useEffect(() => {
-    if (formData.city === "") {
-      setCities({})
-      setAiResponse({})
-      setButtonDisabled(false)
-    }
-  }, [formData.city])
-
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const [showSpinner, setShowSpinner] = useState<boolean>(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false)
@@ -48,7 +29,37 @@ function App() {
 
   const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const headerSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const askClaudeSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   // const nodeRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
+
+  // scroll to claude suggestion box after it loads
+  useEffect(() => {
+    if (aiResponse?.suggestion) {
+      setShowSpinner(prevSpinner => !prevSpinner)
+      setTimeout(() => {
+        scrollToSection(aiSection)
+      }, 100)
+    }
+  }, [aiResponse])
+
+  // scroll to askClaudeSection after it loads
+  useEffect(() => {
+    if (cities.description) {
+      setTimeout(() => {
+        scrollToSection(askClaudeSection)
+      }, 100)
+    }
+  }, [cities])
+
+  // clear weather card data and reset button so it is enabled again
+  useEffect(() => {
+    if (formData.city === "") {
+      setCities({})
+      setAiResponse({})
+      setButtonDisabled(false)
+    }
+  }, [formData.city])
+
 
   // form action
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -201,7 +212,7 @@ function App() {
               description={cities.description ?? "_____"}
               icon={conditionalWeatherIcon() ?? faCloud}
             />
-            <div className="claude-card">
+            <div className="claude-card" ref={askClaudeSection}>
               <h2>Things to do in this weather:</h2>
               {cities.temperature && cities.description ? (
               <button
