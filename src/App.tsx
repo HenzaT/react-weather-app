@@ -27,9 +27,10 @@ function App() {
   const remainingLetters: string = specificCity ? specificCity.slice(1) : ""
   const capitalizedCity: string = firstLetter + remainingLetters
 
-  const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const headerSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const weatherSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const askClaudeSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   // const nodeRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   // scroll to claude suggestion box after it loads
@@ -42,11 +43,11 @@ function App() {
     }
   }, [aiResponse])
 
-  // scroll to askClaudeSection after it loads
+  // scroll to weatherSection after it loads
   useEffect(() => {
     if (cities.description) {
       setTimeout(() => {
-        scrollToSection(askClaudeSection)
+        scrollToSection(weatherSection)
       }, 100)
     }
   }, [cities])
@@ -132,6 +133,10 @@ function App() {
   function requestClaude(event: React.FormEvent) {
     event.preventDefault()
     setButtonDisabled(true)
+    setTimeout(() => {
+      scrollToSection(askClaudeSection)
+    }, 100)
+
     setShowSpinner(prevSpinner => !prevSpinner)
 
     fetch(`${apiUrl}/api/suggestion`, {
@@ -207,6 +212,7 @@ function App() {
         <div className="cards">
           <div className="top-cards">
             <Card
+              ref={weatherSection}
               city={specificCity ? capitalizedCity : "________"}
               temperature={cities.temperature ?? 0}
               description={cities.description ?? "_____"}

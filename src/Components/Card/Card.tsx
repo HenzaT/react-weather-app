@@ -6,11 +6,12 @@ export interface weatherProps {
   temperature: number
   description: string
   icon: IconProp
+  ref: React.RefObject<HTMLDivElement>
 }
 
 function Card(props: weatherProps) {
   return (
-    <div className="weather-card">
+    <div className="weather-card" ref={props.ref}>
       <h2>Current Weather in: <br />{props.city}</h2>
       <div className="card-content">
         <div className="weather-info">
