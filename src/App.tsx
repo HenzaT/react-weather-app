@@ -6,7 +6,7 @@ import Header from './Components/Header/Header.tsx'
 import { faCloud, faSun, faSnowflake } from '@fortawesome/free-regular-svg-icons'
 import { faWind, faCloudBolt, faCloudRain, faSmog } from '@fortawesome/free-solid-svg-icons'
 import parse from 'html-react-parser';
-// import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 import './App.css'
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
   const askClaudeSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const aiSection = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   // const nodeRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
+  const spinnerRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   // scroll to claude suggestion box after it loads
   useEffect(() => {
@@ -234,18 +235,29 @@ function App() {
               )}
             </div>
           </div>
-          {aiResponse.suggestion &&
-            <div
-              ref={aiSection}
-              className="claude-response-card">
-                {parse(aiResponse.suggestion)}
-                <button type="button" onClick={() => scrollToSection(headerSection)}>back to top</button>
-            </div>}
-            {showSpinner &&
-              <div className="loading-spinner">
-                <div className="inside-circle"></div>
-              </div>
-            }
+          <CSSTransition
+            in={!!aiResponse.suggestion}
+            nodeRef={aiSection}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit>
+            <div ref={aiSection} className="claude-response-card">
+              {aiResponse.suggestion && parse(aiResponse.suggestion)}
+              <button type="button" onClick={() => scrollToSection(headerSection)}>back to top</button>
+            </div>
+          </CSSTransition>
+
+          <CSSTransition
+            in={showSpinner}
+            nodeRef={spinnerRef}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <div className="loading-spinner" ref={spinnerRef}>
+              <div className="inside-circle"></div>
+            </div>
+          </CSSTransition>
         </div>
       </div>
       <Footer />

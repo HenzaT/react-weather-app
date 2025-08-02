@@ -75,6 +75,29 @@ button.claude-button:disabled {
   }
 }
 
+.fade-enter {
+  opacity: 0;
+  filter: brightness(0);
+  transform: translateY(10px) scale(0.5);
+}
+.fade-enter-active {
+  opacity: 1;
+  filter: brightness(1);
+  transform: translateY(0) scale(1);
+  transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
+}
+.fade-exit {
+  opacity: 1;
+  filter: brightness(1);
+  transform: translateY(0) scale(1);
+}
+.fade-exit-active {
+  opacity: 0;
+  filter: brightness(0);
+  transform: translateY(10px) scale(0);
+  transition: opacity 700ms ease, transform 700ms ease, filter 700ms ease;
+}
+
 @media (max-width: 600px) {
   .top-cards {flex-direction: column;}
 
