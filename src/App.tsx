@@ -144,7 +144,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ weather: cities.description, city: specificCity })
+      body: JSON.stringify({ temperature: cities.temperature, weather: cities.description, city: specificCity })
     })
     .then(res => res.json())
     .then((data: ClaudeData) => {
