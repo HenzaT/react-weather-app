@@ -15,7 +15,7 @@ function Header(props: HeaderProps) {
         <h1>What's The Weather?</h1>
         <FontAwesomeIcon icon={props.iconTwo} id="header-icon" />
       </div>
-      <p>Search for a city to find the current weather there / Ask Claude Ai for activity suggestions.</p>
+      <h3>Search for a city to find the current weather there / Ask Claude Ai for activity suggestions.</h3>
       {/* <label className="switch">
         <input type="checkbox" />
         <span className="slider round"></span>

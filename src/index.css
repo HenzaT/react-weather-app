@@ -14,21 +14,28 @@
 }
 
 html {
-  --dark: #0A210F;
-  --light: #E1E289;
-  --hover: #14591D;
-  --text: #EAD7D1;
+  --dark: #04041b;
+  --light: rgb(239, 240, 248);
+  --hover: #141e59;
+  --text: #f2f3f9;
   --outline:  rgb(198, 198, 198);
-  --third-color: #ACD2ED;
-  --third-color-hover: #68a7d3;
+  --third-color: #0093fc;
+  --third-color-hover: #0872bd;
 }
 
-body, form, button, input {
+body, form, input {
   margin: 0;
   padding: 0;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 600;
+  font-weight: 400;
+  font-style: normal;
+}
+
+button {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-style: normal;
 }
 

@@ -20,16 +20,16 @@ input[type=text] {
   font-size: 1.3rem;
   box-sizing: border-box;
   border-radius: 5px;
-  border: 2px solid var(--outline);
+  border: 0.9px solid var(--outline);
   transition: border 0.05s ease-in-out;
 }
 
 input[type=text]:hover {
-  border: 2px solid var(--third-color-hover);
+  border: 0.9px solid var(--third-color-hover);
 }
 
 input[type=text]:focus {
-  border: 3px solid var(--third-color);
+  border: 0.9px solid var(--third-color);
 }
 
 input[type=submit], button.claude-button, .claude-response-card > button, .clear-button {
@@ -39,13 +39,13 @@ input[type=submit], button.claude-button, .claude-response-card > button, .clear
   background-color: var(--third-color);
   color: var(--dark);
   border-radius: 20px;
-  border: 2px solid var(--outline);
+  border: 0.5px solid var(--outline);
   font-size: 1.1rem;
-  transition: background 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 input[type=submit]:hover, button.claude-button:hover, .claude-response-card > button:hover, .clear-button:hover {
-  background-color: var(--third-color-hover);
+  transform: translateY(-3px)
 }
 
 input[type=submit], .clear-button {

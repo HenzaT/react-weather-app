@@ -1,7 +1,7 @@
 header {
   width: 100%;
-  background-color: var(--third-color);
-  color: var(--dark);
+  background-color: transparent;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,8 +20,8 @@ header {
 }
 
 @media (max-width: 600px) {
-  p {
-    width: 90%;
+  h3 {
+    width: 100%;
     text-align: center;
   }
 }
