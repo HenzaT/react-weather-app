@@ -220,7 +220,7 @@ function App() {
               icon={conditionalWeatherIcon() ?? faCloud}
             />
             <div className="claude-card" ref={askClaudeSection}>
-              <h2>Things to do in this weather:</h2>
+              <h2>Things To Do:</h2>
               {cities.temperature && cities.description ? (
               <button
                 type="button"

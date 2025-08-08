@@ -12,7 +12,7 @@ export interface weatherProps {
 function Card(props: weatherProps) {
   return (
     <div className="weather-card" ref={props.ref}>
-      <h2>Current Weather in: <br />{props.city}</h2>
+      <h2>Current Weather In: <br />{props.city}</h2>
       <div className="card-content">
         <div className="weather-info">
           <p><span className="sub-title">Temperature:</span> <br />{props.city ? props.temperature : "__"}°C</p>

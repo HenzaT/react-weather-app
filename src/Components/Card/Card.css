@@ -1,12 +1,14 @@
 .weather-card, .claude-card, .claude-response-card {
-  background-color: var(--light);
-  color: var(--dark);
+  background-color: transparent;
+  color: var(--light);
   border-radius: 20px;
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 0 0 0 var(--third-color), 0 0 5px 0 var(--third-color);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .weather-card:hover, .claude-card:hover, .claude-response-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 0 0 0 var(--third-color-hover), 0 0 5px 0 var(--third-color-hover);
 }
 
 .weather-card, .claude-card {
@@ -41,6 +43,7 @@
 
 .weather-info {
   text-align: center;
+  padding: 0 40px;
 }
 
 .sub-title {
@@ -51,6 +54,6 @@
   font-style: normal;
 }
 
-@media (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .weather-card, .claude-card {width: 360px;}
 }

@@ -50,7 +50,7 @@ button.claude-button:disabled {
   height: 50px;
   border-radius: 80%;
   border: 8px solid transparent;
-  border-top-color: var(--third-color-hover);
+  border-top-color: var(--third-color);
   margin: auto;
   position: relative;
   animation: rotate 1.5s ease-in-out infinite;

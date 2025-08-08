@@ -19,8 +19,8 @@ html {
   --hover: #141e59;
   --text: #f2f3f9;
   --outline:  rgb(198, 198, 198);
-  --third-color: #0093fc;
-  --third-color-hover: #0872bd;
+  --third-color: #39acfe;
+  --third-color-hover: #aad5f4;
 }
 
 body, form, input {
@@ -32,10 +32,10 @@ body, form, input {
   font-style: normal;
 }
 
-button {
+form {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
 }
 

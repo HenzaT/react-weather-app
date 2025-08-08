@@ -49,5 +49,5 @@ input[type=submit]:hover, button.claude-button:hover, .claude-response-card > bu
 }
 
 input[type=submit], .clear-button {
-  margin-top: 15px;
+  margin: 20px 0 10px 0;
 }

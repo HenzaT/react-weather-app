@@ -15,13 +15,21 @@ header {
   gap: 10px;
 }
 
+header > h3 {
+  margin: 0;
+}
+
+.claude-text-header {
+  margin-top: 10px;
+}
+
 #header-icon {
   font-size: 1.8rem;
 }
 
-@media (max-width: 600px) {
+@media screen and (max-width: 768px) {
   h3 {
-    width: 100%;
+    width: 90%;
     text-align: center;
   }
 }
