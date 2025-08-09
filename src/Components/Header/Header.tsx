@@ -15,7 +15,7 @@ function Header(props: HeaderProps) {
         <h1>What's The Weather?</h1>
         <FontAwesomeIcon icon={props.iconTwo} id="header-icon" />
       </div>
-      <h3>Search for a city to find the current weather there.</h3>
+      <h3 className="city-text-header">Search for a city to find the current weather there.</h3>
       <h3 className="claude-text-header">Ask Claude Ai for activity suggestions.</h3>
     </header>
   )

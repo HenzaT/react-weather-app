@@ -8,6 +8,7 @@ form {
 
 label, input[type=text] {
   display: block;
+  text-align: center;
 }
 
 input::placeholder {
@@ -50,4 +51,8 @@ input[type=submit]:hover, button.claude-button:hover, .claude-response-card > bu
 
 input[type=submit], .clear-button {
   margin: 20px 0 10px 0;
+}
+
+.error-message {
+  color: rgb(212, 83, 83);
 }

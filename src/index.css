@@ -32,6 +32,13 @@ body, form, input {
   font-style: normal;
 }
 
+p {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 350;
+  font-style: normal;
+}
+
 form {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;

@@ -19,12 +19,24 @@ header > h3 {
   margin: 0;
 }
 
+.city-text-header, .claude-text-header {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 350;
+  font-style: normal;
+}
+
 .claude-text-header {
   margin-top: 10px;
 }
 
 #header-icon {
   font-size: 1.8rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+#header-icon:hover {
+  transform: translateY(-3px);
 }
 
 @media screen and (max-width: 768px) {

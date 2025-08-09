@@ -16,7 +16,7 @@ function Form(props: FormProps) {
         <input
           type="text"
           name="city"
-          placeholder="type a city here..."
+          placeholder="type a city here"
           value={props.formData.city}
           onChange={props.handleChange}
         />
